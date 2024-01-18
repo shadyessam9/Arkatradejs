@@ -413,12 +413,11 @@ section {
 .portfolio .portfolio-items {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Adjust the alignment as needed */
+  justify-content: center; /* Adjust the alignment as needed */
 }
 
 .portfolio .portfolio-item {
   width: calc(33.333% - 30px); /* For 3 items per row */
-  margin: 15px; /* Adjust margin for spacing */
 }
 
 .portfolio .portfolio-item img {
