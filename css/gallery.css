@@ -427,15 +427,49 @@ section {
 }
 
 @media (max-width: 768px) {
-  .portfolio .portfolio-item {
-    width: calc(50% - 30px); /* Change to two columns on smaller screens */
-  }
+.portfolio {
+  padding-top: 60px; /* Space from header */
+  padding-bottom: 60px; /* Space above footer */
+}
+
+.portfolio .portfolio-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Adjust the alignment as needed */
+}
+
+.portfolio .portfolio-item {
+  width: calc(33.333% - 30px); /* For 3 items per row */
+}
+
+.portfolio .portfolio-item img {
+  width: 100%; /* Images fill the container */
+  height: 200px; /* Fixed height for all images */
+  object-fit: cover; /* Cover the area, may crop some parts of the image */
+}
 }
 
 @media (max-width: 480px) {
-  .portfolio .portfolio-item {
-    width: 100%; /* Full width on very small screens */
-  }
+.portfolio {
+  padding-top: 60px; /* Space from header */
+  padding-bottom: 60px; /* Space above footer */
+}
+
+.portfolio .portfolio-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Adjust the alignment as needed */
+}
+
+.portfolio .portfolio-item {
+  width: calc(33.333% - 30px); /* For 3 items per row */
+}
+
+.portfolio .portfolio-item img {
+  width: 100%; /* Images fill the container */
+  height: 200px; /* Fixed height for all images */
+  object-fit: cover; /* Cover the area, may crop some parts of the image */
+}
 }
 
 

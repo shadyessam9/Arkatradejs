@@ -369,7 +369,6 @@ h6 {
 }
 
 .footer-section {
-    padding: 2%; /* Reduced padding for a more compact look */
     flex: 1 1 auto; /* Allows the section to grow and shrink as needed */
     min-width: 140px; /* Minimum width of a section before it wraps */
     box-sizing: border-box; /* Include padding and border in the element's total width */
@@ -377,15 +376,6 @@ h6 {
     position: relative; /* Necessary for absolute positioning of the pseudo-element */
 }
 
-.footer-section:not(:last-child)::after {
-    content: ''; /* This is the pseudo-element acting as the divider */
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px; /* Width of the divider */
-    background-color: #f03c02; /* Color of the divider */
-}
 
 /* Adjusting the media query to ensure dividers remain on all screen sizes */
 @media (max-width: 768px) {
@@ -397,16 +387,6 @@ h6 {
         padding: 5% 2%; /* Adjust padding for smaller screens */
     }
 
-    .footer-section:not(:last-child)::after {
-        content: ''; /* Ensure the divider is visible */
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 100%; /* Full width dividers for smaller screens */
-        height: 2px; /* Divider thickness */
-        top: auto; /* Reset top positioning */
-        background-color: #f03c02; /* Divider color */
-    }
 }
 
 
@@ -465,7 +445,7 @@ h6 {
                 #footer .footer-top .footer-links ul i {
                     padding-right: 2px;
                     color: #fd6f41;
-                    font-size: 18px;
+                    font-size: 12px;
                     line-height: 1;
                 }
 
