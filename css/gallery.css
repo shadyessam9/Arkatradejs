@@ -407,6 +407,7 @@ section {
 
 .portfolio {
   padding-top: 60px; /* Space from header */
+  min-height: fit-content;
   padding-bottom: 60px; /* Space above footer */
 }
 
