@@ -423,8 +423,8 @@ section {
 
 .portfolio .portfolio-item img {
   width: 100%; /* Images fill the container */
-  height: 200px; /* Fixed height for all images */
-  object-fit: cover; /* Cover the area, may crop some parts of the image */
+  height: 300px; /* Fixed height for all images */
+  object-fit: fill; /* Cover the area, may crop some parts of the image */
 }
 
 @media (max-width: 768px) {
@@ -445,8 +445,8 @@ section {
 
 .portfolio .portfolio-item img {
   width: 100%; /* Images fill the container */
-  height: 200px; /* Fixed height for all images */
-  object-fit: cover; /* Cover the area, may crop some parts of the image */
+  height: 300px; /* Fixed height for all images */
+  object-fit: fill; /* Cover the area, may crop some parts of the image */
 }
 }
 
@@ -468,8 +468,8 @@ section {
 
 .portfolio .portfolio-item img {
   width: 100%; /* Images fill the container */
-  height: 200px; /* Fixed height for all images */
-  object-fit: cover; /* Cover the area, may crop some parts of the image */
+  height: 300px; /* Fixed height for all images */
+  object-fit: fill; /* Cover the area, may crop some parts of the image */
 }
 }
 
