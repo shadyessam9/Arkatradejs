@@ -250,39 +250,81 @@
 
 
 <script>
-function uploadImage() {
+    function uploadImage() {
     var fileInput = document.getElementById('images');
     var deptSelect = document.getElementById('dept');
 
     if (fileInput.files.length > 0) {
         var formData = new FormData();
 
-        // Loop through each file and append it to formData
+        // Counter for asynchronous blob conversion
+        var imagesProcessed = 0;
+
         for (var i = 0; i < fileInput.files.length; i++) {
-            var file = fileInput.files[i];
-            formData.append('images[]', file); // Changed to 'images[]' to indicate an array of files
+            // Read each file as an image
+            (function(file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var image = new Image();
+                    image.onload = function () {
+                        // Create a canvas and get the context
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+
+                        // Set canvas size to image size
+                        canvas.width = image.height;
+                        canvas.height = image.width;
+
+                        // Rotate and draw the image onto the canvas
+                        ctx.rotate(90 * Math.PI / 180);
+                        ctx.drawImage(image, 0, -image.height);
+
+                        // Convert the canvas to a blob and add to formData
+                        canvas.toBlob(function (blob) {
+                            var newFile = new File([blob], file.name, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now()
+                            });
+                            formData.append('images[]', newFile);
+
+                            // Check if all files have been processed
+                            imagesProcessed++;
+                            if (imagesProcessed === fileInput.files.length) {
+                                sendFormData(formData); // Send form data after all images are processed
+                            }
+                        }, 'image/jpeg');
+                    };
+                    image.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            })(fileInput.files[i]);
         }
 
         formData.append('dept', deptSelect.value);
 
-        fetch('https://arkatrade.000webhostapp.com/phpapi/insertimage.php', {
-            method: 'POST',
-            body: formData
-        }).then(response => {
-            if (response.ok) {
-                return response.text();
-            }
-            throw new Error('Network response was not ok.');
-        }).then(data => {
-            console.log('Success:', data);
-            window.location.reload();
-        }).catch(error => {
-            console.error('Error:', error);
-        });
     } else {
         console.log('No file selected');
     }
 }
+
+function sendFormData(formData) {
+    fetch('https://arkatrade.000webhostapp.com/phpapi/insertimage.php', {
+        method: 'POST',
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        }
+        throw new Error('Network response was not ok.');
+    }).then(data => {
+        console.log('Success:', data);
+        window.location.reload();
+        // Handle the successful response
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 </script>
 
 
