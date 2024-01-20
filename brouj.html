@@ -96,6 +96,8 @@
             </div>
         </div>
     </section><!-- End Featured Services Section -->
+
+
     <section class="timeline">
         <div class="container">
 
@@ -189,30 +191,27 @@
 
 
 
-    <!-- Products Section -->
+<!-- Products Section -->
 <section id="products" class="services">
     <div class="container">
         <div class="section-title">
             <h2><strong>Samples</strong></h2>
         </div>
 
-        <div id="productslist" class="carousel slide" data-ride="carousel" style="background-color: rgba(250, 249, 248, 1)">
-            <div class="carousel-inner">
-                <div class="carousel-inner" id="carousel-inner">
-                </div>
-                <a class="carousel-control-prev" href="#products" role="button" data-bs-target="#productslist" data-bs-slide="prev" >
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#f03c02"></span>
-                </a>
-                <a class="carousel-control-next" href="#products" role="button" data-bs-target="#productslist" data-bs-slide="next" >
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#f03c02"></span>
-                </a>
-                
+        <div id="productslist" class="swiper-container" style="background-color: rgba(250, 249, 248, 1)">
+            <div class="swiper-wrapper" id="carousel-inner">
+                <!-- Your carousel items go here -->
             </div>
-
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next" style="background-color:#f03c02"></div>
+            <div class="swiper-button-prev" style="background-color:#f03c02"></div>
         </div>
     </div>
 </section>
 <!-- End Products Section -->
+
 
 
     <!-- ======= Frequently Asked Questions Section ======= -->
@@ -343,23 +342,40 @@
         });
     </script>
 
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         fetch('https://arkatrade.000webhostapp.com/phpapi/broujcoursel.php')
             .then(response => response.json())
             .then(data => {
                 let innerHtml = '';
                 data.forEach((item, index) => {
                     innerHtml += `
-                        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                        <div class="swiper-slide">
                             <img class="d-block mx-auto" style="height:500px" src="https://arkatrade.000webhostapp.com/phpapi/${item.FilePath}" loading="lazy">
                         </div>`;
                 });
                 document.getElementById('carousel-inner').innerHTML = innerHtml;
+
+                // Initialize Swiper
+                var mySwiper = new Swiper('#productslist', {
+                    loop: true,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
             })
             .catch(error => console.error('Error:', error));
     });
 </script>
-
 </body>
 </html>

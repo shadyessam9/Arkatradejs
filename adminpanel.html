@@ -250,7 +250,7 @@
 
 
 <script>
-    function uploadImage() {
+function uploadImage() {
     var fileInput = document.getElementById('images');
     var deptSelect = document.getElementById('dept');
 
@@ -272,12 +272,11 @@
                         var ctx = canvas.getContext('2d');
 
                         // Set canvas size to image size
-                        canvas.width = image.height;
-                        canvas.height = image.width;
+                        canvas.width = image.width;
+                        canvas.height = image.height;
 
-                        // Rotate and draw the image onto the canvas
-                        ctx.rotate(90 * Math.PI / 180);
-                        ctx.drawImage(image, 0, -image.height);
+                        // Draw the image onto the canvas without rotation
+                        ctx.drawImage(image, 0, 0, image.width, image.height);
 
                         // Convert the canvas to a blob and add to formData
                         canvas.toBlob(function (blob) {
@@ -290,6 +289,7 @@
                             // Check if all files have been processed
                             imagesProcessed++;
                             if (imagesProcessed === fileInput.files.length) {
+                                formData.append('dept', deptSelect.value);
                                 sendFormData(formData); // Send form data after all images are processed
                             }
                         }, 'image/jpeg');
@@ -299,14 +299,10 @@
                 reader.readAsDataURL(file);
             })(fileInput.files[i]);
         }
-
-        formData.append('dept', deptSelect.value);
-
     } else {
         console.log('No file selected');
     }
 }
-
 function sendFormData(formData) {
     fetch('https://arkatrade.000webhostapp.com/phpapi/insertimage.php', {
         method: 'POST',
