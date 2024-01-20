@@ -250,7 +250,7 @@
 
 
 <script>
-    function uploadImage() {
+function uploadImage() {
     var fileInput = document.getElementById('images');
     var deptSelect = document.getElementById('dept');
 
@@ -271,13 +271,23 @@
                         var canvas = document.createElement('canvas');
                         var ctx = canvas.getContext('2d');
 
-                        // Set canvas size to image size
-                        canvas.width = image.height;
-                        canvas.height = image.width;
+                        // Determine the orientation (portrait or landscape)
+                        var isPortrait = image.height > image.width;
+
+                        // Set canvas size based on orientation
+                        canvas.width = isPortrait ? image.height : image.width;
+                        canvas.height = isPortrait ? image.width : image.height;
 
                         // Rotate and draw the image onto the canvas
-                        ctx.rotate(90 * Math.PI / 180);
-                        ctx.drawImage(image, 0, -image.height);
+                        if (isPortrait) {
+                            ctx.translate(canvas.width, 0);
+                            ctx.rotate(90 * Math.PI / 180);
+                        } else {
+                            ctx.translate(0, canvas.height);
+                            ctx.rotate(-90 * Math.PI / 180);
+                        }
+
+                        ctx.drawImage(image, 0, 0);
 
                         // Convert the canvas to a blob and add to formData
                         canvas.toBlob(function (blob) {
@@ -290,6 +300,7 @@
                             // Check if all files have been processed
                             imagesProcessed++;
                             if (imagesProcessed === fileInput.files.length) {
+                                formData.append('dept', deptSelect.value);
                                 sendFormData(formData); // Send form data after all images are processed
                             }
                         }, 'image/jpeg');
@@ -299,32 +310,10 @@
                 reader.readAsDataURL(file);
             })(fileInput.files[i]);
         }
-
-        formData.append('dept', deptSelect.value);
-
     } else {
         console.log('No file selected');
     }
 }
-
-function sendFormData(formData) {
-    fetch('https://arkatrade.000webhostapp.com/phpapi/insertimage.php', {
-        method: 'POST',
-        body: formData
-    }).then(response => {
-        if (response.ok) {
-            return response.text();
-        }
-        throw new Error('Network response was not ok.');
-    }).then(data => {
-        console.log('Success:', data);
-        window.location.reload();
-        // Handle the successful response
-    }).catch(error => {
-        console.error('Error:', error);
-    });
-}
-
 </script>
 
 
